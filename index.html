@@ -34,6 +34,7 @@
   </style>
 
   <input type="text" id="display">
+  <button onclick="backspace()">⌫</button>
   <br><br>
 
 
@@ -60,7 +61,7 @@
 
   <button onclick="clearDisplay()">C</button>
   <button class = 'operator' onclick="addNumber('0')">0</button>
-  <button class = 'operator' onclick="calculate()">=</button>
+  <button onclick="calculate()">=</button>
   <button class = 'operator' onclick="addNumber('+')">+</button>
   
   <script>
@@ -75,6 +76,12 @@
     function calculate() {
       let display = document.getElementById("display");
       display.value = eval(display.value);
+    }
+
+    function backspace() {
+      let display = document.getElementById("display");
+
+      display.value = display.value.slice(0,-1)
     }
     </script>
 
