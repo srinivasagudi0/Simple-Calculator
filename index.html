@@ -31,6 +31,21 @@
     border-radius: 50%;
   }    
 
+  .history-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width:260px;
+    margin-top: 10px;
+  }
+
+  .history-header button {
+    width: auto;
+    height: 32px;
+    padding: 6px 2px;
+    font-size: 14px;
+  }
+
   </style>
 
   <input type="text" id="display">
@@ -66,7 +81,10 @@
   <button onclick="calculate()">=</button>
   <br><br>
 
-  <h1>History</h1>
+  <div class="history-header">
+    <h1 style="margin:0;">History</h1>
+    <button id="clear-history" onclick="ClearHistory()">clear</button>
+  </div>
   <ul id ="history"></ul>
 
 
@@ -173,4 +191,3 @@
 
 </body>
 </html>
-
