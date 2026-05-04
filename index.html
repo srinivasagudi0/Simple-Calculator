@@ -61,7 +61,7 @@
 
   <button onclick="clearDisplay()">C</button>
   <button class = 'operator' onclick="addNumber('0')">0</button>
-  <button class = 'operator'>.</button>
+  <button class = 'operator' onclick="addDecimal()">.</button>
   <button class = 'operator' onclick="addNumber('+')">+</button>
   <button onclick="calculate()">=</button>
   <script>
@@ -82,6 +82,16 @@
       let display = document.getElementById("display");
 
       display.value = display.value.slice(0,-1)
+    }
+
+    function addDecimal() {
+      let display = document.getElementById("display");
+      let parts = display.value.split(/[\+\-\*\/]/);
+      let lastNumber = parts[parts.length-1];
+      // still doubtful what would happen if I do this -> 3.3.2
+      if (!lastNumber.includes(".")) {
+        display.value += ".";
+      }
     }
     </script>
 
