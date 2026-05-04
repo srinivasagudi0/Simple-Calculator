@@ -50,6 +50,7 @@
 
   <input type="text" id="display">
   <button onclick="backspace()">⌫</button>
+  
   <br><br>
 
 
@@ -185,6 +186,13 @@
         clearDisplay();
       }
     });
+
+    function ClearHistory() {
+      let history = document.getElementById("history");
+
+      history.innerHTML = "";
+      localStorage.removeItem("history");
+    }
   
     </script>
 
