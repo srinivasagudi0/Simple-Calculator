@@ -79,7 +79,7 @@
   <button class = 'operator' onclick="addNumber('8')">8</button>
   <button class = 'operator' onclick="addNumber('9')">9</button>
   <button class = 'operator' onclick="addNumber('-')">-</button>
-  <button class = 'operator'>√</button>
+  <button class = 'operator' onclick="addSymbol('√')">√</button>
   <button class = 'operator'>^</button>
   <br>
 
@@ -114,6 +114,7 @@
   });
     };
 
+    // make the 
 
     function addNumber(num) {
       document.getElementById("display").value += num;
@@ -128,6 +129,9 @@
       try {  
         // doing this so i can get acess to this again in hitory
         let expression = display.value;
+        // accept the one line below this, mainly the pattern is what i got from chatgpt, i undersand javas script but can't do this stuff yet.
+
+        expression = expression.replace(/√(\d+(\.\d+)?)/g, "Math.sqrt($1)");
         let result = eval(expression)
         
         display.value = result;
@@ -166,6 +170,11 @@
       stored.push(equation);
       localStorage.setItem("history", JSON.stringify(stored));
 
+    }
+
+    function addSymbol(symbol) {
+      a = document.getElementById('display')
+      a.value +=  symbol
     }
 
     document.addEventListener("keydown", function(event) {
