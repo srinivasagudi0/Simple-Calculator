@@ -9,6 +9,8 @@
 	    body {
 	      background: #333;
 	      color: white;
+	      min-height: 100vh;
+	      text-align: center;
 	    }
 
 	  .operator {
@@ -32,13 +34,15 @@
 	    border-radius: 50%;
 	  }    
 
-  .history-header {
-    display: flex;
+	  .history-header {
+	    display: flex;
     align-items: center;
     justify-content: space-between;
-    width:260px;
-    margin-top: 10px;
-  }
+	    width:260px;
+	    margin-top: 10px;
+	    margin-left:auto;
+	    margin-right:auto;
+	  }
 
   .history-header button {
     width: auto;
@@ -50,7 +54,7 @@
   </style>
 
   
-  <input type="text" id="display" readonly>
+  <input type="text" id="display">
     
   <br><br>
 
@@ -90,8 +94,6 @@
   <button class = 'operator' onclick="addNumber('+')">+</button>
   <button onclick="calculate()">=</button>
   <button onclick="backspace()">⌫</button>
-  <button onclick="addNumber('(')">(</button>
-  <button onclick="addNumber(')')">)</button>
   <br><br>
 
   <div class="history-header">
@@ -193,7 +195,7 @@
          addNumber(key);
       }
 
-      else if (key === "-" || key === "+" || key === "*" || key === "/" || key === "^" || key === "(" || key === ")") {
+      else if (key === "-" || key === "+" || key === "*" || key === "/" || key === "^") {
           addNumber(key);
       }
 
