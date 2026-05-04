@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset = "UTF-8" >
   <title>My Calculator</title>
 </head>
 <body>
@@ -60,8 +61,8 @@
   <button class = 'operator' onclick="addNumber('2')">2</button> 
   <button class = 'operator' onclick="addNumber('3')">3</button> 
   <button class = 'operator' onclick="addNumber('/')">/</button>
-  <button class = 'operator'>Sin</button>
-  <button class = 'operator'>Cot</button>
+  <button class = 'operator' onclick="addSymbol('sin(')">Sin</button>
+  <button class = 'operator' onclick="addSymbol('cot(')">Cot</button>
   <br>
 
   <br>
@@ -71,8 +72,8 @@
   <button class = 'operator' onclick="addNumber('5')">5</button>
   <button class = 'operator' onclick="addNumber('6')">6</button>
   <button class = 'operator' onclick="addNumber('*')">x</button>
-   <button class = 'operator'>cos</button>
-   <button class = 'operator'>tan</button>
+   <button class = 'operator' onclick="addSymbol('cos(')">cos</button>
+   <button class = 'operator' onclick="addSymbol('tan(')">tan</button>
   <br>
   
   <button class = 'operator' onclick="addNumber('7')">7</button>
@@ -80,7 +81,7 @@
   <button class = 'operator' onclick="addNumber('9')">9</button>
   <button class = 'operator' onclick="addNumber('-')">-</button>
   <button class = 'operator' onclick="addSymbol('√')">√</button>
-  <button class = 'operator'>^</button>
+  <button class = 'operator' onclick="addNumber('^')">^</button>
   <br>
 
   <button onclick="clearDisplay()">C</button>
@@ -129,15 +130,21 @@
       try {  
         // doing this so i can get acess to this again in hitory
         let expression = display.value;
-        // accept the one line below this, mainly the pattern is what i got from chatgpt, i undersand javas script but can't do this stuff yet.
-
+        let oldExpression = display.value;
+        // I.accept the one line below this, mainly the pattern is what i got from chatgpt, i undersand javas script but can't do this stuff yet. and the lines below took inspiration.
+        // so bascially line 136-141 is Ai written
         expression = expression.replace(/√(\d+(\.\d+)?)/g, "Math.sqrt($1)");
+        expression = expression.replace(/sin\((\d+(\.\d+)?)\)?/g, "Math.sin($1)");
+        expression = expression.replace(/cos\((\d+(\.\d+)?)\)?/g, "Math.cos($1)");
+        expression = expression.replace(/tan\((\d+(\.\d+)?)\)?/g, "Math.tan($1)");
+        expression = expression.replace(/cot\((\d+(\.\d+)?)\)?/g, "1 / Math.tan($1)");
+        expression = expression.replace(/\^/g, "**");
         let result = eval(expression)
         
         display.value = result;
 
         // use the expressions and result variable for history purposes
-        addToHistory(expression + " = "+ result)
+        addToHistory(oldExpression + " = "+ result)
 
       } catch {display.value = 'Error'}
     }
@@ -181,28 +188,25 @@
       let key = event.key;
 
       if (!isNaN(key)) {
-        addNumber(key);
+         addNumber(key);
       }
 
-      else if (key === "-" || key === "+" || key === "*" || key === "/") {
-        addNumber(key);
+      else if (key === "-" || key === "+" || key === "*" || key === "/" || key === "^") {
+          addNumber(key);
       }
 
       else if (key === ".") {
+        
         addDecimal();
       }
 
-      else if (key === "Enter") {
-        calculate();
-      }
+      else if (key === "Enter") { calculate();}
 
       else if (key === "Backspace") {
-        backspace();
-      }
+        backspace();}
 
       else if (key === "Escape") {
-        clearDisplay();
-      }
+        clearDisplay();}
     });
 
     function ClearHistory() {
