@@ -6,31 +6,31 @@
 </head>
 <body>
   <style>
-    body {
-      background: #333;
-      color: white;
-    }
+	    body {
+	      background: #333;
+	      color: white;
+	    }
 
-  .operator {
-  background: orange;
-}
+	  .operator {
+	  background: orange;
+	}
 
-    #display {
-      width: 200px;
-      height: 30px;
-      font-size: 20px;
-      text-align:right;
-      margin-bottom: 00px;
-    }
+	    #display {
+	      width: 200px;
+	      height: 30px;
+	      font-size: 20px;
+	      text-align:right;
+	      margin-bottom: 00px;
+	    }
   
   
-    button {
-    width: 50px;
-    height: 50px;
-    font-size: 18px;
-    margin: 5px;
-    border-radius: 50%;
-  }    
+	    button {
+	    width: 50px;
+	    height: 50px;
+	    font-size: 18px;
+	    margin: 5px;
+	    border-radius: 50%;
+	  }    
 
   .history-header {
     display: flex;
@@ -50,7 +50,7 @@
   </style>
 
   
-  <input type="text" id="display">
+  <input type="text" id="display" readonly>
     
   <br><br>
 
@@ -90,6 +90,8 @@
   <button class = 'operator' onclick="addNumber('+')">+</button>
   <button onclick="calculate()">=</button>
   <button onclick="backspace()">⌫</button>
+  <button onclick="addNumber('(')">(</button>
+  <button onclick="addNumber(')')">)</button>
   <br><br>
 
   <div class="history-header">
@@ -191,7 +193,7 @@
          addNumber(key);
       }
 
-      else if (key === "-" || key === "+" || key === "*" || key === "/" || key === "^") {
+      else if (key === "-" || key === "+" || key === "*" || key === "/" || key === "^" || key === "(" || key === ")") {
           addNumber(key);
       }
 
