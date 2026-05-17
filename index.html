@@ -1,242 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset = "UTF-8" >
-  <title>My Calculator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Calculator</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <style>
-	    body {
-	      background: #333;
-	      color: white;
-	      min-height: 100vh;
-	      text-align: center;
-	    }
+  <main class="calculator" aria-label="Calculator">
+    <section class="display-panel">
+      <p class="label">Smart Calculator</p>
+      <input id="display" type="text" value="0" aria-label="Calculator display" readonly>
+    </section>
 
-	  .operator {
-	  background: orange;
-	}
+    <section class="keys" aria-label="Calculator keys">
+      <button class="tool" type="button" data-action="clear">C</button>
+      <button class="tool" type="button" data-action="backspace">⌫</button>
+      <button class="tool" type="button" data-action="percent">%</button>
+      <button class="operator" type="button" data-value="/">÷</button>
 
-	    #display {
-	      width: 200px;
-	      height: 30px;
-	      font-size: 20px;
-	      text-align:right;
-	      margin-bottom: 00px;
-	    }
-  
-  
-	    button {
-	    width: 50px;
-	    height: 50px;
-	    font-size: 18px;
-	    margin: 5px;
-	    border-radius: 50%;
-	  }    
+      <button type="button" data-value="7">7</button>
+      <button type="button" data-value="8">8</button>
+      <button type="button" data-value="9">9</button>
+      <button class="operator" type="button" data-value="*">×</button>
 
-	  .history-header {
-	    display: flex;
-    align-items: center;
-    justify-content: space-between;
-	    width:260px;
-	    margin-top: 10px;
-	    margin-left:auto;
-	    margin-right:auto;
-	  }
+      <button type="button" data-value="4">4</button>
+      <button type="button" data-value="5">5</button>
+      <button type="button" data-value="6">6</button>
+      <button class="operator" type="button" data-value="-">−</button>
 
-	  .history-header button {
-	    width: auto;
-	    height: 32px;
-	    padding: 6px 2px;
-	    font-size: 14px;
-	  }
+      <button type="button" data-value="1">1</button>
+      <button type="button" data-value="2">2</button>
+      <button type="button" data-value="3">3</button>
+      <button class="operator" type="button" data-value="+">+</button>
 
-	  #history {
-	    width:260px;
-	    margin:10px auto;
-	    padding-left:20px;
-	    text-align:left;
-	    font-size:18px;
-	  }
+      <button class="tool" type="button" data-action="toggle-sign">±</button>
+      <button type="button" data-value="0">0</button>
+      <button type="button" data-value=".">.</button>
+      <button class="equals" type="button" data-action="calculate">=</button>
+    </section>
 
-	  #history li {
-	    margin:8px 0;
-	    background:#444;
-	    padding:8px;
-	    border-radius:8px;
-	  }
+    <section class="history-panel">
+      <div class="history-heading">
+        <h2>Recent</h2>
+        <button type="button" data-action="clear-history">Clear</button>
+      </div>
+      <ul id="history" aria-live="polite"></ul>
+    </section>
+  </main>
 
-	  </style>
-
-  
-  <input type="text" id="display">
-    
-  <br><br>
-
-
-
-  <br>
-  <button class = 'operator' onclick="addNumber('1')">1</button> 
-  <button class = 'operator' onclick="addNumber('2')">2</button> 
-  <button class = 'operator' onclick="addNumber('3')">3</button> 
-  <button class = 'operator' onclick="addNumber('/')">/</button>
-  <button class = 'operator' onclick="addSymbol('sin(')">Sin</button>
-  <button class = 'operator' onclick="addSymbol('cot(')">Cot</button>
-  <br>
-
-  <br>
-
-
-  <button class = 'operator' onclick="addNumber('4')">4</button>
-  <button class = 'operator' onclick="addNumber('5')">5</button>
-  <button class = 'operator' onclick="addNumber('6')">6</button>
-  <button class = 'operator' onclick="addNumber('*')">x</button>
-   <button class = 'operator' onclick="addSymbol('cos(')">cos</button>
-   <button class = 'operator' onclick="addSymbol('tan(')">tan</button>
-  <br>
-  
-  <button class = 'operator' onclick="addNumber('7')">7</button>
-  <button class = 'operator' onclick="addNumber('8')">8</button>
-  <button class = 'operator' onclick="addNumber('9')">9</button>
-  <button class = 'operator' onclick="addNumber('-')">-</button>
-  <button class = 'operator' onclick="addSymbol('√')">√</button>
-  <button class = 'operator' onclick="addNumber('^')">^</button>
-  <br>
-
-  <button onclick="clearDisplay()">C</button>
-  <button class = 'operator' onclick="addNumber('0')">0</button>
-  <button class = 'operator' onclick="addDecimal()">.</button>
-  <button class = 'operator' onclick="addNumber('+')">+</button>
-  <button onclick="calculate()">=</button>
-  <button onclick="backspace()">⌫</button>
-  <br><br>
-
-  <div class="history-header">
-    <h1 style="margin:0;">History</h1>
-    <button id="clear-history" onclick="ClearHistory()">clear</button>
-  </div>
-  <ul id ="history"></ul>
-
-
-
-  <script>
-    // load history on the start
-    window.onload = function() {
-  let stored = JSON.parse(localStorage.getItem("history")) || [];
-  let history = document.getElementById("history");
-
-      // was a nightmare creating this 
-  stored.forEach(function(item) {
-    let li = document.createElement("li");
-
-    li.innerText = item;
-    history.appendChild(li);
-  });
-    };
-
-    // make the 
-
-    function addNumber(num) {
-      document.getElementById("display").value += num;
-    }
-
-    function clearDisplay() {
-      document.getElementById("display").value = "";
-    }
-
-    function calculate() {
-      let display = document.getElementById("display");
-      try {  
-        // doing this so i can get acess to this again in hitory
-        let expression = display.value;
-        let oldExpression = display.value;
-        // I.accept the one line below this, mainly the pattern is what i got from chatgpt, i undersand javas script but can't do this stuff yet. and the lines below took inspiration.
-        // so bascially line 136-141 is Ai written
-        expression = expression.replace(/√(\d+(\.\d+)?)/g, "Math.sqrt($1)");
-        expression = expression.replace(/sin\((\d+(\.\d+)?)\)?/g, "Math.sin($1)");
-        expression = expression.replace(/cos\((\d+(\.\d+)?)\)?/g, "Math.cos($1)");
-        expression = expression.replace(/tan\((\d+(\.\d+)?)\)?/g, "Math.tan($1)");
-        expression = expression.replace(/cot\((\d+(\.\d+)?)\)?/g, "1 / Math.tan($1)");
-        expression = expression.replace(/\^/g, "**");
-        let result = eval(expression)
-        
-        display.value = result;
-
-        // use the expressions and result variable for history purposes
-        addToHistory(oldExpression + " = "+ result)
-
-      } catch {display.value = 'Error'}
-    }
-
-    function backspace() {
-      let display = document.getElementById("display");
-
-      display.value = display.value.slice(0,-1)
-    }
-
-    function addDecimal() {
-      let display = document.getElementById("display");
-      let parts = display.value.split(/[\+\-\*\/]/);
-      let lastNumber = parts[parts.length-1];
-      // still doubtful what would happen if I do this -> 3.3.2
-      if (!lastNumber.includes(".")) {
-        display.value += ".";
-      }
-    }
-
-    function addToHistory(equation) {
-      let history = document.getElementById("history")
-
-      let li = document.createElement("li");
-      li.innerText = equation;
-      
-      history.appendChild(li);
-
-      let stored = JSON.parse(localStorage.getItem("history")) || [];
-      stored.push(equation);
-      localStorage.setItem("history", JSON.stringify(stored));
-
-    }
-
-    function addSymbol(symbol) {
-      a = document.getElementById('display')
-      a.value +=  symbol
-    }
-
-    document.addEventListener("keydown", function(event) {
-      let key = event.key;
-
-      if (!isNaN(key)) {
-         addNumber(key);
-      }
-
-      else if (key === "-" || key === "+" || key === "*" || key === "/" || key === "^") {
-          addNumber(key);
-      }
-
-      else if (key === ".") {
-        
-        addDecimal();
-      }
-
-      else if (key === "Enter") { calculate();}
-
-      else if (key === "Backspace") {
-        backspace();}
-
-      else if (key === "Escape") {
-        clearDisplay();}
-    });
-
-    function ClearHistory() {
-      let history = document.getElementById("history");
-
-      history.innerHTML = "";
-      localStorage.removeItem("history");
-    }
-  
-    </script>
-
-
+  <script src="script.js"></script>
 </body>
 </html>
